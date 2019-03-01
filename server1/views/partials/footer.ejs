@@ -1,0 +1,120 @@
+ 
+        
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <!--<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>-->
+
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>-->
+
+        <!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>-->
+
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <!--<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>-->
+        <script>
+            $("#summarytable").DataTable();
+        </script>
+
+        <script>
+            $.fn.dataTable.ext.search.push(
+                function( settings, data, dataIndex ) {
+                    var yearmin = parseInt( $('#min').val().slice(0,4), 10 );
+                    var yearmax = parseInt( $('#max').val().slice(0,4), 10 );
+                    var monthmin = parseInt( $('#min').val().slice(5,7), 10 );
+                    var monthmax = parseInt( $('#max').val().slice(5,7), 10 );
+                    var datemin = parseInt( $('#min').val().slice(8,11), 10 );
+                    var datemax = parseInt( $('#max').val().slice(8,11), 10 );
+
+                    var min = yearmin + monthmin + datemin;
+                    var max = yearmax + monthmax + datemax;
+                    //console.log(min)
+                    //console.log(max)
+                    var year = parseFloat( data[3].slice(0,4)) || 0;
+                    var month = parseFloat( data[3].slice(5,7)) || 0;
+                    var day = parseFloat( data[3].slice(8,11))|| 0;
+                    var date = year + month + day;
+                    // use data for the age column
+
+                    if ( ( isNaN( min ) && isNaN( max ) ) ||
+                        ( isNaN( min ) && date <= max ) ||
+                        ( min <= date   && isNaN( max ) ) ||
+                        ( min <= date   && date <= max ) )
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            );
+
+            $(document).ready(function() {
+                var table = $('#itemlisttable').DataTable();
+
+                // Event listener to the two range filtering inputs to redraw on input
+                $('#min, #max').keyup( function() {
+                    table.draw();
+                } );
+            } );
+        </script>
+        <script>
+            function getslots() {
+                let payload = {
+                    auctionDate: $('#auctionDate').val()
+                }
+                $.get(
+                    'https://localhost:3000/campgrounds/newslots',
+                    {
+                        params: payload,
+                    },
+                    (data) => {
+                        console.log(data)
+                        var x = document.getElementById("auctionSlot");
+                        console.log(x);
+                        for(val in x){
+                            x.remove(x.val)
+                        }
+                        data.forEach(function (slot) {
+                            var option = document.createElement("option");
+                            option.text = slot.startTime + " - " + slot.endTime;
+                            option.value = slot.startTime+ "-"+ slot.endTime;
+                            if (x != null) {
+                                x.add(option);
+                            }
+                        });
+
+                        if (data && data.error) alert(data.error)
+                        if (data && data.success) console.log(data.success);
+                    }
+                );
+            }
+        </script>
+
+        <script>
+                setInterval(function() {
+                $.get(
+                    'https://localhost:3000/campgrounds/topbids',
+
+                    (data) => {
+                        $("#latestbid").find("tr:gt(0)").remove();
+                        data.forEach(function (item) {
+                            for(var x=0; x< 1; x++){
+                                if(item.bids.length >0) {
+                                    $("#latestbid").append("<tr><td>" + item.name + "</td><td>$" + item.bids[0].bidamount + "</td></tr>");
+                                }
+                            }
+                        });
+
+                        if (data && data.error) alert(data.error)
+                        if (data && data.success) console.log(data.success);
+                    }
+                );
+            }, 3000);
+        </script>
+
+
+    </body>
+</html>

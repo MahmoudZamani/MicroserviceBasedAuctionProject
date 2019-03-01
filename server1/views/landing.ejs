@@ -1,0 +1,51 @@
+<% include partials/header %>
+
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <a href="/register"><img class="first-slide" src="https://images.unsplash.com/photo-1525328437458-0c4d4db7cab4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1800&q=80" alt="First slide"></a>
+                <div class="container">
+                    <div class="carousel-caption">
+                        <h1>Your Profile Information</h1>
+                        
+                        <p><a class="btn btn-lg btn-primary" href="/register">Sign up today</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <a href="#"><img class="second-slide" src="https://images.unsplash.com/photo-1528399783831-8318d62d10e5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1800&q=80" alt="Second slide"></a>
+                <div class="container">
+                    <div class="carousel-caption">
+                        <h1>Order Summary</h1>
+                        <p>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</p>
+                        <p><a class="btn btn-lg btn-primary" href="#" role="button">See Order Summary</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <a href="/campgrounds/new"><img class="third-slide" src="http://www.freegreatpicture.com/files/147/7962-background-color.jpg" alt="Third slide"></a>
+                <div class="container">
+                    <div class="carousel-caption">
+                        <h1>Post Item</h1>
+                        <p>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</p>
+                        <p><a class="btn btn-lg btn-primary" href="/campgrounds/new" role="button">Post Item</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+<% include partials/footer %>
