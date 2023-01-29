@@ -23,7 +23,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^5.0.1",
-    "redis-smq": "^1.0.21",
+    "redis-smq": "^1.1.6",
     "rsmq": "^0.9.3",
     "rsmq-worker": "^0.5.2"
   }
